@@ -1,0 +1,41 @@
+{
+  "name": "cronkeeper-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon",
+    "production": "pm2 start index.js --name knowledge-backend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inatagan/cronkeeper-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inatagan/cronkeeper-api/issues"
+  },
+  "homepage": "https://github.com/inatagan/cronkeeper-api#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "consign": "^0.1.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jwt-simple": "^0.5.6",
+    "knex": "^0.95.2",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.0",
+    "node-schedule": "^2.0.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "pg": "^8.5.1",
+    "pm2": "^4.5.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
