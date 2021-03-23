@@ -11,7 +11,7 @@ module.exports = app => {
 
     const save = async (req, res) => {
         const user = {...req.body}
-        if(req.params.id) user.id = req.params.id
+        if(req.params.id) user.user_uuid = req.params.id
 
         try {
             existsOrError(user.name, 'Nome não definido')
@@ -23,7 +23,7 @@ module.exports = app => {
             
             const userFromDB = await app.db('users')
                 .where({ email: user.email }).first()
-            if(!user.id) {
+            if(!user.user_uuid) {
                 notExixstsOrError(userFromDB, 'Usuário já cadastrado')
             }
         } catch (msg) {
@@ -33,16 +33,17 @@ module.exports = app => {
         user.password = encryptPassword(user.password)
         delete user.confirmPassword
 
-        if(user.id) {
+        if(user.user_uuid) {
             app.db('users')
                 .update(user)
-                .where({ user_uuid: user.id })
+                .where({ user_uuid: user.user_uuid })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
-            const userForDB = { user_uuid: uuidv4(), ...user }
+            //const userForDB = { user_uuid: uuidv4(), ...user }
+            user.user_uuid = uuidv4()
             app.db('users')
-                .insert(userForDB)
+                .insert(user)
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
@@ -51,7 +52,9 @@ module.exports = app => {
     const get = (req, res) => {
         app.db('users')
             .select('user_uuid', 'name', 'email', 'admin')
+            .then(users => res.json(users))
+            .catch(err => res.status(500).send(err))
     }
 
-    return { save }
+    return { save, get }
 }
