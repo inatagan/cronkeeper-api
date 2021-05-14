@@ -7,6 +7,7 @@ exports.up = function(knex) {
         table.string('imageUrl', 1000)
         table.datetime('datetime')
         table.uuid('user_uuid').references('user_uuid').inTable('users').notNull()
+        table.unique(['event_uuid', 'user_uuid'])
     })
 };
 
